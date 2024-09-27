@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container{
+            background-color: grey;
+            padding: 20px;
+            border-radius: 20px;
+        }
+
+        .add-btn{
+            background-color: green;
+            border: none;
+            padding: 10px;
+            border-radius: 15px;
+            margin-left: 15px;
+        }
+
+        input[type="text"]{
+            padding: 10px;
+            border-radius: 15px;
+            border: none;
+            margin-left: 30px;
+        }
+
+        *{
+            list-style-type: none;
+        }
+
+        .todo-item{
+            background: transparent; 
+            color: black;
+        }
+
+        .edit-btn{
+            background-color: blue;
+        }
+        
+        .delete-btn{
+            background-color: red;
+            
+        }
+        
+        .edit-btn, .delete-btn{
+            padding: 10px;
+            color: white;
+            border-radius: 15px;
+            margin-right: 10px;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to my Todo app</h1>
+        <input type="text" id="userInput">
+        <button class="add-btn" id="addBtn">Add Todo</button>
+
+        <ul class="todo" id="todos">
+
+        </ul>
+    </div>  
+
+    <script>
+
+        let btn = document.getElementById('addBtn')
+        let todos = document.getElementById('todos')
+        let user = document.getElementById('userInput')
+
+
+        btn.addEventListener('click', addTodo)
+
+        function addTodo(){
+            let userInput = user.value.trim()
+            if(userInput !== ''){
+                let newTask = document.createElement('li')
+                
+                newTask.innerHTML = `
+                <p>
+                    <input type="text" class="todo-item" value='${user.value}' disabled />
+                    <span class="edit-btn editTodo"> Edit </span>
+                    <span class="edit-btn updateTodo" style="display: none;"> update </span>
+                    <span class="delete-btn deleteTodo"> Delete </span>
+                </p>
+                `
+                
+                todos.appendChild(newTask)
+                user.value = ''
+
+                let edit = newTask.querySelector('.editTodo')
+                let todoItem = newTask.querySelector('.todo-item')
+                let updateTodo = newTask.querySelector('.updateTodo')
+                let deleteBtn = newTask.querySelector('.deleteTodo')
+                edit.addEventListener('click', function(){
+                    todoItem.disabled = false
+                    todoItem.focus()
+                    updateTodo.style.display = "inline-block"
+                    edit.style.display = "none"
+                })
+
+                updateTodo.addEventListener('click', function(){
+                    todoItem.disabled = true
+                    updateTodo.style.display = 'none'
+                    edit.style.display = 'inline-block'
+                })
+
+
+                deleteBtn.addEventListener('click', function(){
+                    newTask.remove()
+                })
+
+
+                // CRUD : create, read, update, delete
+
+
+
+            }
+        }
+
+
+        
+
+
+
+
+    </script>
+
+
+   
+</body>
+</html>
